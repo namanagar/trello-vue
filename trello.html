@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="author" content="Naman Agarwal">
+  <meta charset="utf-8">
+  <!-- stop the web browser from ever caching this page or its images -->
+  <!-- <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" /> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/http-vue-loader"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+  <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+  <title>Trello Clone</title>
+</head>
+<body>
+  <!-- root element --> 
+  <div id="my-app">
+    <!-- div that controls the background color/image using the style bindings -->
+    <div class="backgroundwrapper" :style="{ backgroundColor: backgroundColorVal, backgroundImage: 'url(' + backgroundImageVal + ')' }">
+      <div class="row">
+        <!-- Vue component that handles creating users, logging in and out, and editing user info --> 
+        <user @create-user="createUser" @login="login" @logout="logout" @edit-username="editUsername" @edit-email="editEmail" @edit-pic="editPic"
+        :users="users" :loggedin="loggedInUser"></user>
+      </div>
+      <div class="row">
+        <!-- Vue component that handles adding lists --> 
+        <add-list @create-list="createList" :lengthlists="lengthLists"></add-list>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row-fluid">
+            <div class="col-lg-4">
+              <h3>Project Details</h3>
+            </div>
+          </div>
+          <div class="row-fluid">
+            <!-- Two buttons to set the background color and background image of the project -->
+            <div class="col-lg-4">
+              <h5>Background color: </h5>
+              <label class="btn btn-primary">Set Color
+                <input type="color" value="#ff0000" @change="setColor($event)">
+              </label>
+              <h5>Background image: </h5>
+              <label class="btn btn-primary">Set Image
+                <input type="file" @change="backgroundImageUpload($event)" class="custom-file-input">
+              </label>
+            </div>
+            <div class="col-lg-4">
+              <h5>Categories: </h5>
+              <ul>
+                <li v-for="category in categories" @click="editCategory(category)" :style="{ color: category.color }">
+                  {{  category.name  }}
+                </li>
+              </ul>
+              <small class="text-muted">Click on a category to edit it.</small>
+              <button type="button" class="btn btn-default btn-primary" @click="createCategory">Create a Category</button>
+            </div>
+            <div class="col-lg-4">
+              <h5>Filters</h5>
+              <template v-for="category in categories">
+                <label>
+                  <input :id="category['.key']" :value="category['.key']" type="checkbox" v-model="checkedCategories">{{  category.name  }}</input>
+                </label>
+              </template>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <div class="row">
+        <!-- generates List components and handles its methods -->
+        <template v-for="(list, index) in myLists">
+          <list :list="list" :index="index" :length="lengthLists" :tasks="allTasks" :users="users" :checkedcategories="checkedCategories"
+          @delete-list="deleteList(list)" @move-list-left="moveListLeft(list)" @move-list-right="moveListRight(list)"
+          @create-task="createTask" @delete-task="deleteTask" @move-task-left="moveTaskLeft" @move-task-right="moveTaskRight"
+          @edit-list-name="editListName"></list>
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <style>
+  /* helps with responsiveness of the page */
+  html, div{
+    max-width: 100%;
+  }
+  .row{
+    max-width: 100%;
+  }
+</style>
+<script src="app.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

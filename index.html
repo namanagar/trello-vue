@@ -22,9 +22,8 @@
     <!-- div that controls the background color/image using the style bindings -->
     <div class="backgroundwrapper" :style="{ backgroundColor: backgroundColorVal, backgroundImage: 'url(' + backgroundImageVal + ')' }">
       <div class="row">
-        <!-- Vue component that handles creating users, logging in and out, and editing user info -->
-        <user @create-user="createUser" @login="login" @logout="logout" @edit-username="editUsername" @edit-email="editEmail" @edit-pic="editPic"
-        :users="users" :loggedin="loggedInUser"></user>
+        <!-- Vue component that handles creating users, logging in and out, and editing user info  @edit-username="editUsername" @edit-email="editEmail" @edit-pic="editPic" -->
+        <user @create-user="createUser" @login="login" @logout="logout" :users="users" :loggedin="loggedInUser"></user>
       </div>
       <div class="row">
         <!-- Vue component that handles adding lists --> 
@@ -90,6 +89,10 @@
   }
   .row{
     max-width: 100%;
+  }
+
+  [hidden] {
+    display: none !important;
   }
 </style>
 <script src="app.js"></script>

@@ -73,7 +73,7 @@ new Vue({
       this.$firebaseRefs.loggedInUser.child('email').set('')
       this.$firebaseRefs.loggedInUser.child('image').set('')
     },
-    editUsername(newName){
+    /* editUsername(newName){
       this.$firebaseRefs.loggedInUser.child('name').set(newName)
     },
     editEmail(newEmail){
@@ -81,7 +81,7 @@ new Vue({
     },
     editPic(newPic){
       this.$firebaseRefs.loggedInUser.child('image').set(newPic)
-    },
+    }, */
     createList(newList){
       this.$firebaseRefs.myLists.push(newList)
     },

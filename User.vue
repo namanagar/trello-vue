@@ -10,23 +10,25 @@
       <div class="col-lg-3" v-show="loggedin.name.length > 0">
         <div class="row">
           <h3>Welcome, {{ loggedin.name }}</h3>
-          <button type="button" class="btn btn-sm" @click="editName(loggedin)">
+          <!-- <button type="button" class="btn btn-sm" @click="editName(loggedin)">
             <i class="fa fa-edit"></i>
-          </button>
+          </button> -->
         </div>
         <div class="row">
-          <p>{{loggedin.email}}</p>
-          <button type="button" class="btn btn-sm" @click="editEmail(loggedin)">
-            <i class="fa fa-edit"></i>
-          </button>
+          <p>Email address: {{loggedin.email}}</p>
+          <!-- <button type="button" class="btn btn-sm" @click="editEmail(loggedin)">
+            <i class="fa fa-edit"></i> 
+          </button> -->
         </div>
         <div class="row">
           <img :src="loggedin.image"/>
-          <label class="btn btn-default btn-secondary">Change Image
+          <!-- <label class="btn btn-default btn-secondary">Change Image
             <input type="file" @change="editPic($event)" class="custom-file-input">
-          </label>
+          </label> -->
         </div>
-        <button class="btn btn-danger" @click="$emit('logout')">Logout</button>
+        <div class="row">
+          <button class="btn btn-danger" @click="$emit('logout')">Logout</button>
+        </div>
       </div>
       <div class="col-lg-3">
         <h3>Create a User</h3>
@@ -98,12 +100,12 @@ module.exports = {
         this.signinpass = ''
       }
       else{
-        alert("Sorry, those credentials don't match!")
+        alert("Sorry, your credentials don't match!")
         this.signin = ''
         this.signinpass = ''
       }
     },
-    editName(user){
+    /* editName(user){
       var newName = prompt("What would you like to rename user " + user.name + "?", user.name)
       if (newName != null && newName != ""){
         this.$emit('edit-username', newName)
@@ -123,7 +125,7 @@ module.exports = {
         vm.$emit('edit-pic', e.target.result)
       }
       reader.readAsDataURL(file)
-    }
+    } */
   }
 }
 </script>

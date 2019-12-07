@@ -59,10 +59,10 @@
         <div class="modal-footer">
           <button class="btn btn-primary" @click="addComment">Add Comment</button>
           <button class="btn btn-primary" @click="addTodo">Add Hashtag</button>
-          <button class="btn btn-primary" @click="addUser">Assign User</button>
-          <label class="btn btn-primary">
+          <button class="btn btn-primary" @click="addUser">Invite User</button>
+          <label class="btn btn-primary" for="im-uploader">
             Add Image
-            <input type="file" @change="fileUpload($event)" class="custom-file-input">
+            <input id="im-uploader" type="file" @change="fileUpload($event)" class="custom-file-input" hidden>
           </label>
         </div>
       </div>

@@ -22,8 +22,8 @@
         <button type="button" class="btn btn-default btn-primary" @click="createTask">Add Task</button>
       </div>
       <div class="card-footer">
-        <button v-if="index < length-1" class="btn btn-success right" @click="$emit('move-list-right')">&raquo</button>
-        <button v-if="index > 0" class="btn btn-danger right" @click="$emit('move-list-left')">&laquo</button>
+        <button v-if="index < length-1" class="btn btn-success right" @click="$emit('move-list-right')">&raquo;</button>
+        <button v-if="index > 0" class="btn btn-danger right" @click="$emit('move-list-left')">&laquo;</button>
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@ module.exports = {
   },
   methods: {
     editName(list){
-      var newName = prompt("What would you like to rename list " + list.name + "?", list.name)
+      var newName = prompt("What would you like to rename list " + list.name + "? Beware that the list should be empty or your cards will disappear!", list.name)
       if (newName != null && newName != ""){
         this.$emit("edit-list-name", [list, newName])
       }

@@ -13,6 +13,7 @@
     <div class="card-body">
       <h6 class="card-text">Task Details:</h6>
       <p class="card-text">Created: {{ task.creationdate }}</p>
+      <p class="card-text">Due: {{ task.deadline }}</p>
       <button class="btn btn-primary" @click="openModal">Expand</button>
     </div>
     <div class="card-footer">

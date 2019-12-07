@@ -4,6 +4,7 @@
       <div class="col-lg-3" v-show="loggedin.name.length == 0">
         <h3>Sign In</h3>
         <input v-model="signin" class="form-control" placeholder="Enter name or email">
+        <input v-model="signinpass" class="form-control" placeholder="Enter password">
         <button class="btn btn-primary" @click="login">Submit</button>
       </div>
       <div class="col-lg-3" v-show="loggedin.name.length > 0">
@@ -31,6 +32,7 @@
         <h3>Create a User</h3>
         <input v-model="name" type="text" class="form-control" placeholder="Name" required>
         <input v-model="email" type="email" class="form-control" placeholder="Email" required>
+        <input v-model="password" type="password" class="form-control" placeholder="Password" required>
         <label class="btn btn-default btn-secondary">
           Choose an Image
           <input type="file" @change="fileUpload($event)" class="custom-file-input">
@@ -49,19 +51,22 @@ module.exports = {
       name: '',
       email: '',
       image: '',
-      signin: ''
+      signin: '',
+      password: '',
+      signinpass: ''
     }
   },
   props: ['users', 'loggedin'],
   methods: {
     createUser() {
-      if (this.name === '' || this.email === ''){
-        alert("Must submit at least one character!")
+      if (this.name === '' || this.email === '' || this.password === ''){
+        alert("One of the required fields is missing!")
       }
       else{
-        this.$emit('create-user', {name : this.name, email: this.email, image: this.image})
+        this.$emit('create-user', {name : this.name, email: this.email, password: this.password, image: this.image})
         this.name = ''
         this.email = ''
+        this.password = ''
       }
     },
     fileUpload(event){
@@ -79,16 +84,23 @@ module.exports = {
       var nameCheck = this.users.filter(user => user.name == this.signin)
       var emailCheck = this.users.filter(user => user.email == this.signin)
       if (nameCheck.length > 0){
-        this.$emit('login', nameCheck[0])
+        if (nameCheck[0].password === this.signinpass){
+          this.$emit('login', nameCheck[0])
+        }
         this.signin = ''
+        this.signinpass = ''
       }
       else if (emailCheck.length > 0){
-        this.$emit('login', emailCheck[0])
+        if (emailCheck[0].password === this.signinpass){
+          this.$emit('login', emailCheck[0])
+        }
         this.signin = ''
+        this.signinpass = ''
       }
       else{
         alert("Sorry, those credentials don't match!")
         this.signin = ''
+        this.signinpass = ''
       }
     },
     editName(user){

@@ -38,10 +38,10 @@
               </ul>
             </div>
             <div class="col-xs-3">
-              <p>Todos: </p>
+              <p>Hashtags: </p>
               <ul>
                 <li v-for="todo in task.todos" @click="removeTodo(todo)">
-                  {{  todo  }}
+                  {{ '#' + todo  }}
                 </li>
               </ul>
             </div>
@@ -58,7 +58,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" @click="addComment">Add Comment</button>
-          <button class="btn btn-primary" @click="addTodo">Add Todo</button>
+          <button class="btn btn-primary" @click="addTodo">Add Hashtag</button>
           <button class="btn btn-primary" @click="addUser">Assign User</button>
           <label class="btn btn-primary">
             Add Image
@@ -155,7 +155,7 @@ module.exports = {
       tasksRef.child(this.task['.key']).child('comments').push(newComment)
     },
     addTodo(){
-      var newtodo = prompt("What is the todo you would like to add?")
+      var newtodo = prompt("What is the hashtag you would like to add?")
       tasksRef.child(this.task['.key']).child('todos').push(newtodo)
     },
     addUser(){

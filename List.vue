@@ -16,7 +16,7 @@
       </div>
       <div class="card-block collapse show" :id="this.index">
         <template v-for="task in tasks">
-          <task v-show="render(task)" :users="users" :task="task" :index="index" :length="length"
+          <task v-show="render(task)" :users="users" :task="task" :index="index" :length="length" :key="task.key"
           @delete-task="deleteTask(task)" @move-task-left="moveTaskLeft(task)" @move-task-right="moveTaskRight(task)"></task>
         </template>
         <button type="button" class="btn btn-default btn-primary" @click="createTask">Add Task</button>

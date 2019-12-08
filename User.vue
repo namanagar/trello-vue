@@ -4,7 +4,7 @@
       <div class="col-lg-3" v-show="loggedin.name.length == 0">
         <h3>Sign In</h3>
         <input v-model="signin" class="form-control" placeholder="Enter name or email">
-        <input v-model="signinpass" class="form-control" placeholder="Enter password">
+        <input v-model="signinpass" class="form-control" type="password" placeholder="Enter password">
         <button class="btn btn-primary" @click="login">Submit</button>
       </div>
       <div class="col-lg-3" v-show="loggedin.name.length > 0">
@@ -61,8 +61,8 @@ module.exports = {
   props: ['users', 'loggedin'],
   methods: {
     createUser() {
-      if (this.name === '' || this.email === '' || this.password === ''){
-        alert("One of the required fields is missing!")
+      if (this.name === '' || this.email === '' || this.password === '' || this.image === ''){
+        alert("All fields are required!")
       }
       else{
         this.$emit('create-user', {name : this.name, email: this.email, password: this.password, image: this.image})
@@ -132,7 +132,7 @@ module.exports = {
 
 <style scoped>
 div{
-  margin-top: .5em;
+  margin-top: 2.5em;
   margin-left: 2em;
 }
 button{

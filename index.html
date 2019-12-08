@@ -19,6 +19,27 @@
 <body>
   <!-- root element --> 
   <div id="my-app">
+      <!-- nav bar -->
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+          <a class="navbar-brand" href="#"><i class="fa fa-adjust" aria-hidden="true">></i>  collab</a>
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <input v-model="newList" class="form-control mr-sm-2" type="search" placeholder="Create a new list" aria-label="Create a List">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="button" @click="createNewList">Submit</button>
+            </form>
+          </div>
+        </nav>
     <!-- div that controls the background color/image using the style bindings -->
     <div class="backgroundwrapper" :style="{ backgroundColor: backgroundColorVal, backgroundImage: 'url(' + backgroundImageVal + ')' }">
       <div class="row">
@@ -26,8 +47,8 @@
         <user @create-user="createUser" @login="login" @logout="logout" :users="users" :loggedin="loggedInUser"></user>
       </div>
       <div class="row">
-        <!-- Vue component that handles adding lists --> 
-        <add-list @create-list="createList" :lengthlists="lengthLists"></add-list>
+        <!-- Vue component that handles adding lists  
+        <add-list @create-list="createList" :lengthlists="lengthLists"></add-list> -->
       </div>
       <div class="row">
         <div class="col-lg-12">
@@ -49,13 +70,13 @@
               </label>
             </div>
             <div class="col-lg-4">
-              <h5>Categories: </h5>
+              <h5>Labels: </h5>
               <ul>
                 <li v-for="category in categories" @click="editCategory(category)" :style="{ color: category.color }">
                   {{  category.name  }}
                 </li>
               </ul>
-              <small class="text-muted">Click on a category to edit it.</small>
+              <small class="text-muted">Click on a label to edit it.</small>
               <button type="button" class="btn btn-default btn-primary" @click="createCategory">Create a Category</button>
             </div>
             <div class="col-lg-4">

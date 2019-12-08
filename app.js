@@ -37,6 +37,7 @@ new Vue({
     backgroundColorVal: '',
     backgroundImageVal: '',
     checkedCategories: checkedCategories,
+    newList: '',
   },
   firebase: {
     myLists: listsRef.orderByChild('index'),
@@ -60,6 +61,15 @@ new Vue({
   },
   methods: {
     //These methods are pretty straightforward based on the name, just updating firebase values based on user changes
+    createNewList() {
+      if (this.newList === ''){
+        alert("Must submit at least one character!")
+      }
+      else{
+        this.$firebaseRefs.myLists.push({name : this.newList, index: this.lengthLists})
+        this.newList = ''
+      }
+    },
     createUser(user){
       this.$firebaseRefs.users.push(user)
     },
@@ -82,9 +92,6 @@ new Vue({
     editPic(newPic){
       this.$firebaseRefs.loggedInUser.child('image').set(newPic)
     }, */
-    createList(newList){
-      this.$firebaseRefs.myLists.push(newList)
-    },
     deleteList(list){
       this.$firebaseRefs.myLists.child(list['.key']).remove()
     },

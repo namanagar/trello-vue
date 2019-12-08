@@ -14,7 +14,7 @@
               <p @click="editDescription">Description: {{  task.description  }}</p>
               <p>Creation Date:  {{  task.creationdate  }}</p>
               <p @click="editDeadline">Deadline:  {{  task.deadline  }}</p>
-              <p @click="switchCategory" :style="{ color: categoryColor() }">Category: {{ categoryName() }}</p>
+              <p @click="switchCategory" :style="{ color: categoryColor() }">Label: {{ categoryName() }}</p>
               <p>List:  {{  task.list  }}</p>
               <small class="text-muted">Click on an item to edit it.</small>
             </div>

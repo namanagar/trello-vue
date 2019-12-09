@@ -76,8 +76,11 @@ new Vue({
       }
     },
     createUser(user){
-      this.$firebaseRefs.users.push(user)
       this.showRegister = false
+      this.$firebaseRefs.users.push(user)
+      this.$firebaseRefs.loggedInUser.child('name').set(user.name)
+      this.$firebaseRefs.loggedInUser.child('email').set(user.email)
+      this.$firebaseRefs.loggedInUser.child('image').set(user.image)
     },
     openSignIn() {
       this.showSignIn = true

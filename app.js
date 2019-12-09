@@ -141,20 +141,7 @@ new Vue({
       this.$firebaseRefs.allTasks.child(task['.key']).remove()
     },
     moveTaskLeft(task){
-       //gets the task's current list string
-       var query = db.ref('allTasks/'+task['.key']+'/list')
-       var list
-       query.once('value', function(snapshot){
-        list = snapshot.val()
-      })
-      // gets that list's object key using the name string
-      var query = db.ref('myLists').orderByChild('name').equalTo(list)
-      var key
-      query.once('value', function(snapshot){
-        snapshot.forEach(function(itemSnapshot) {
-         key = Object.keys(snapshot.val())[0]
-       })
-      })
+       var key = task.list
       // get that list's index using the key
       var query = db.ref('myLists').child(key+'').child('index')
       var index
@@ -169,30 +156,11 @@ new Vue({
          newListKey = Object.keys(snapshot.val())[0]
        })
       })
-      // get the new list's name using the above key
-      var query = db.ref('myLists').child(newListKey).child('name')
-      var newName
-      query.once('value', function(snapshot){
-        newName = snapshot.val()
-      })
       //set the task's list to the new list
-      tasksRef.child(task['.key']).child('list').set(newName)
+      tasksRef.child(task['.key']).child('list').set(newListKey)
     },
     moveTaskRight(task){
-      //gets the task's current list string
-      var query = db.ref('allTasks/'+task['.key']+'/list')
-      var list
-      query.once('value', function(snapshot){
-        list = snapshot.val()
-      })
-      // gets that list's object key using the name string
-      var query = db.ref('myLists').orderByChild('name').equalTo(list)
-      var key
-      query.once('value', function(snapshot){
-        snapshot.forEach(function(itemSnapshot) {
-         key = Object.keys(snapshot.val())[0]
-       })
-      })
+      var key = task.list
       // get that list's index using the key
       var query = db.ref('myLists').child(key+'').child('index')
       var index
@@ -207,14 +175,8 @@ new Vue({
          newListKey = Object.keys(snapshot.val())[0]
        })
       })
-      // get the new list's name using the above key
-      var query = db.ref('myLists').child(newListKey).child('name')
-      var newName
-      query.once('value', function(snapshot){
-        newName = snapshot.val()
-      })
       //set the task's list to the new list
-      tasksRef.child(task['.key']).child('list').set(newName)
+      tasksRef.child(task['.key']).child('list').set(newListKey)
     },
     backgroundImageUpload(event){
       //FileReader handles the uploading of the file, when it loads it sets the Firebase background image

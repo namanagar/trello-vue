@@ -18,7 +18,7 @@
                   <input type="radio" name="category" v-model="cat" :value="category"> {{  category.name  }}
                 </li>
               </ul>
-              <button class="btn btn-primary" @click="createTask(task)" :disabled="!name || !description || !cat">Submit</button>
+              <button class="btn btn-primary" @click="createTask" :disabled="!name || !description || !cat">Submit</button>
             </div>
           </div>
         </div>

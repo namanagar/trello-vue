@@ -37,7 +37,7 @@
               </h6>
               <p :style="{ color: categoryColor() }"> {{ categoryName() }}</p>
               <h6>List:</h6>
-              <p>  {{  task.list  }}</p>
+              <p>  {{  task.list.name  }}</p>
             </div>
           </div>
           <hr>
@@ -265,8 +265,6 @@ module.exports = {
 img{
   max-width: 9.375em;
   max-height: 9.375em;
-
-
 }
 
 h6 {
@@ -285,16 +283,7 @@ h6 {
   display: inline;
   object-fit: cover;
   overflow: hidden;
-  height: 2.5em;
-  width: 2.5em;
   border-radius: 50%;
   border-spacing: 2.5em;
-
-
 }
-
-
-
-
-
 </style>

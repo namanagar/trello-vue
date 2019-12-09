@@ -16,7 +16,7 @@
       </div>
       <div class="card-block collapse show" :id="this.index">
         <template v-for="task in tasks">
-          <task v-show="render(task)" :users="users" :task="task" :index="index" :length="length" :key="task.key"
+          <task v-show="render(task)" :users="users" :task="task" :index="index" :length="length" :key="task.key" :list="list"
           @delete-task="deleteTask(task)" @move-task-left="moveTaskLeft(task)" @move-task-right="moveTaskRight(task)"></task>
         </template>
         <hr>
@@ -61,7 +61,7 @@ module.exports = {
       if (deadline.getMonth() < 10){
         deadlinestring = "0" + deadline.toLocaleString().substring(0, 9)
       }
-      var myList = this.list.name
+      var myList = this.list['.key']
       this.$emit('create-task',
         {
             name: name,
@@ -88,17 +88,12 @@ module.exports = {
     },
     render(task){
       // function that checks if the task should be displayed in each list. Can't be computed b/c Firebase changes don't update computed values AFAIK
-      var list = db.ref('allTasks/'+task['.key']+'/list')
-      var listname
-      list.on('value', function(snapshot){
-        listname = snapshot.val()
-      })
       var category = db.ref('allTasks/'+task['.key']+'/category')
       var cat
       category.on('value', function(snapshot){
         cat = snapshot.val()
       })
-      return (listname == this.list.name) && (this.checkedcategories.includes(cat))
+      return (task.list == this.list['.key']) && (this.checkedcategories.includes(cat))
     }
   },
   components: {

@@ -5,7 +5,7 @@
         <button type="button" class="btn btn-light right" @click="$emit('delete-task')" title="Delete Task">
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
-        <button type="button" class="btn btn-light right" @click="editName(task)" title="Edit Task Name">
+        <button type="button" class="btn btn-light right" @click="editName(task)">
           <i class="fa fa-edit" aria-hidden="true"></i>
         </button>
       </h5>
@@ -14,12 +14,9 @@
       <p class="card-text">Created: {{ task.creationdate }}</p>
       <p class="card-text">Due: {{ task.deadline }}</p>
       <hr>
-      <button class="btn btn-light" @click="openModal" title = "Open Task">
-        <i class="fa fa-expand-arrows-alt" style="color: #0275d8" aria-hidden="true"></i></button>
-      <button class="btn btn-light right" v-if="this.index < this.length-1" @click="$emit('move-task-right', task)"
-              title="Move Task Right">&raquo;</button>
-      <button class="btn btn-light right" v-if="this.index > 0" @click="$emit('move-task-left', task)"
-              title="Move Task Left">&laquo;</button>
+      <button class="btn btn-light" @click="openModal"><i class="fa fa-expand-arrows-alt" style="color: #0275d8" aria-hidden="true"></i></button>
+      <button class="btn btn-light right" v-if="this.index < this.length-1" @click="$emit('move-task-right', task)">&raquo;</button>
+      <button class="btn btn-light right" v-if="this.index > 0" @click="$emit('move-task-left', task)">&laquo;</button>
     </div>
     <modal :task="task" :users="users" :show="showModal" @close="closeModal"></modal>
   </div>

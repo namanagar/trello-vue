@@ -262,6 +262,7 @@ module.exports = {
   display: block;
   font-size: .8em;
 }
+
 img{
   max-width: 9.375em;
   max-height: 9.375em;
@@ -283,6 +284,8 @@ h6 {
   display: inline;
   object-fit: cover;
   overflow: hidden;
+  height: 2.5em;
+  width: 2.5em;
   border-radius: 50%;
   border-spacing: 2.5em;
 }

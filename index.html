@@ -29,7 +29,7 @@
             </h5>
             <button v-if="this.loggedInUser.name.length == 0" class="btn btn-info my-2 my-lg-0 mr-3" type="button" @click="openSignIn">Sign In</button>
             <button v-if="this.loggedInUser.name.length == 0" class="btn btn-success my-2 my-lg-0 mr-3" type="button" @click="openRegister">Register</button>
-            <button v-if="this.loggedInUser.name.length > 0" class="btn btn-danger my-2 my-lg-0 mr-3" type="button" @click="logout">Log Out</button>
+
             <label v-if="this.loggedInUser.name.length > 0" class="btn btn-primary my-2 my-lg-0 mr-3">Change Background Color
                 <input type="color" value="#ff0000" @change="setColor($event)" hidden>
             </label>
@@ -39,8 +39,9 @@
             <button v-if="this.loggedInUser.name.length > 0" class="btn btn-secondary my-2 my-lg-0 mr-3" type="button" @click="openCategories">Filter Categories</button>
             <form v-if="this.loggedInUser.name.length > 0" class="form-inline my-2 my-lg-0">
               <input v-model="newList" class="form-control mr-sm-2" type="search" placeholder="Create a new list" aria-label="Create a List">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="button" @click="createNewList">Submit</button>
+              <button class="btn btn-outline-success my-2 my-sm-0 mr-3" type="button" @click="createNewList">Submit</button>
             </form>
+            <button v-if="this.loggedInUser.name.length > 0" class="btn btn-danger my-2 my-lg-0" type="button" @click="logout">Log Out</button>
           </div>
           <!-- nav bar modals for login, register, categories handled by the above functions  -->
           <login :users="users" :show="showSignIn" @close="closeSignIn" @login="login"></login>

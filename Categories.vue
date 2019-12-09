@@ -12,29 +12,26 @@
           <div class="row-fluid">
             <div class="col-xs-12">
               <h5>Current Categories</h5>
-              <ul>
-                <li v-for="category in categories" :style="{ color: category.color }">
-                  {{  category.name  }}
-                  <button type="button" class="btn-xs btn-default btn-light" @click="editCategory(category)" title="Edit">
-                    <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
-                  </button>
-                </li>
-              </ul>
+              <span  v-for="category in categories" :style="{ color: category.color }">
+                {{  category.name  }}
+                <button type="button" class="btn-xs btn-default btn-light" @click="editCategory(category)" title="Edit">
+                  <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
+                </button>
+              </span>
             </div>
+          </div>
             <hr>
             <div class="row-fluid">
               <div class="col-xs-12">
                 <h5>Filters</h5>
+                <span v-for="category in categories">
+                <label style="margin-right: 1.5em;">
+                  {{  category.name  }}
+
+                  <input :id="category['.key']" :value="category['.key']" type="checkbox" v-model="inputChecked">
+                  </label>
+              </span>
               </div>
-            </div>
-            <div class="row-fluid">
-            <div class="col-xs-12" style="margin-top: 1em">
-              <template v-for="category in categories">
-                <label style="margin-left: 1em;">
-                  <input :id="category['.key']" :value="category['.key']" type="checkbox" v-model="inputChecked">{{  category.name  }}
-                </label>
-              </template>
-            </div>
             </div>
             <hr>
             <div class="row-fluid">
@@ -56,7 +53,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -109,5 +105,10 @@ module.exports = {
 .modal {
   display: block;
 }
+
+li{
+  display: inline;
+}
+
 
 </style>

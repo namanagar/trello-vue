@@ -11,11 +11,11 @@
         <div class="modal-body">
           <div class="row-fluid">
             <div class="col-xs-12">
-              <input v-model="name" type="text" class="form-control form-row" placeholder="Name" required>
-              <input v-model="email" type="email" class="form-control form-row" placeholder="Email" required>
-              <input v-model="password" type="password" class="form-control form-row" placeholder="Password" required>
+              <input v-model="name" type="text" class="form-control form-row" placeholder="Name*" required>
+              <input v-model="email" type="email" class="form-control form-row" placeholder="Email*" required>
+              <input v-model="password" type="password" class="form-control form-row" placeholder="Password*" required>
               <label class="btn btn-default btn-secondary form-row">
-                Choose an Image
+                Choose an Image*
                 <input type="file" @change="fileUpload($event)" class="custom-file-input">
               </label>
               <label class="form-row"><input type="checkbox" class = "check">

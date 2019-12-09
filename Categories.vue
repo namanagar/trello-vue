@@ -71,9 +71,9 @@ module.exports = {
       this.$emit('close')
     },
     createCategory(){
+      this.$emit('create-cat', {name: this.newCat, color: this.color})
       this.newCat = ''
       this.color = '#000000'
-      this.$emit('create-cat', {name: this.newCat, color: this.color})
     },
     editCategory(category){
       var newName = prompt("What is the new name for this category?", category.name)

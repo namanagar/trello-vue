@@ -17,9 +17,17 @@
                 </li>
               </ul>
               <small class="text-muted">Click on a label to edit it.</small>
-              <button type="button" class="btn btn-default btn-primary" @click="createCategory">Create a Category</button>
             </div>
             <hr>
+            <div class="row-fluid">
+              <div class="col-xs-12">
+                <input v-model="newCat" class="form-control" placeholder="Enter category name">
+                <label class="btn btn-primary">Set Category Color
+                  <input type="color" value="#ff0000" @change="setColor($event)" hidden>
+                </label>
+                <button type="button" class="btn btn-default btn-success" :disabled="!!newCat" @click="createCategory">Create a New Category</button>
+              </div>
+            </div>
             <div class="row-fluid">
               <div class="col-xs-12">
                 <h5>Filters</h5>
@@ -46,6 +54,8 @@ module.exports = {
   data: function() {
     return {
       inputChecked: this.checkedcategories,
+      newCat: '',
+      color: ''
     }
   },
   props: ['categories', 'checkedcategories', 'show'],
@@ -54,15 +64,7 @@ module.exports = {
       this.$emit('close')
     },
     createCategory(){
-      var name = prompt("What do you want to name the new category?")
-      var color = prompt("Please enter a hex value for the color of the category, including the #")
-      if (name != null && name.length != 0){
-        if (color.charAt(0) === '#' && color.length === 7){
-          this.$emit('create-cat', {name: name, color: color})
-        }
-        else alert("Your color is formatted wrong!")
-      }
-      else alert("Must enter a name!")
+      this.$emit('create-cat', {name: this.newCat, color: this.color})
     },
     editCategory(category){
       var newName = prompt("What is the new name for this category?", category.name)
@@ -77,6 +79,9 @@ module.exports = {
       }
       else alert("Your color is formatted wrong!")
     },
+    setColor(event){
+      this.color = event.target.value
+    }
   },
   watch: {
     inputChecked(val) {

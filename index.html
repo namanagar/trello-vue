@@ -18,7 +18,7 @@
 </head>
 <body>
   <!-- root element that connects to Vue --> 
-  <div id="my-app">
+  <div id="my-app" :style="{ backgroundColor: backgroundColor['.value'], backgroundImage: 'url(' + backgroundImage['.value'] + ')' }">
       <!-- nav bar -->
       <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
           <a class="navbar-brand" href="#"><i class="fa fa-adjust" aria-hidden="true">></i>  collab</a>
@@ -50,7 +50,7 @@
            @create-cat="createCategory" @edit-cat="editCategory"></categories>
         </nav>
     <!-- div that controls the background color/image using the style bindings from the header buttons -->
-    <div class="backgroundwrapper" :style="{ backgroundColor: backgroundColorVal, backgroundImage: 'url(' + backgroundImageVal + ')' }">
+    <div class="backgroundwrapper">
       <div class="row board">
         <!-- generates List components and handles its methods -->
         <template v-for="(list, index) in myLists">

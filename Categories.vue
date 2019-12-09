@@ -11,36 +11,47 @@
         <div class="modal-body">
           <div class="row-fluid">
             <div class="col-xs-12">
+              <h5>Current Categories</h5>
               <ul>
-                <li v-for="category in categories" @click="editCategory(category)" :style="{ color: category.color }">
+                <li v-for="category in categories" :style="{ color: category.color }">
                   {{  category.name  }}
+                  <button type="button" class="btn-xs btn-default btn-light" @click="editCategory(category)" title="Edit">
+                    <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
+                  </button>
                 </li>
               </ul>
-              <small class="text-muted">Click on a label to edit it.</small>
             </div>
             <hr>
-            <div class="row-fluid">
-              <div class="col-xs-12">
-                <input v-model="newCat" class="form-control" placeholder="Enter category name">
-                <label class="btn btn-primary">Set Category Color
-                  <input type="color" value="#ff0000" @change="setColor($event)" hidden>
-                </label>
-                <button type="button" class="btn btn-default btn-success" :disabled="!!newCat" @click="createCategory">Create a New Category</button>
-              </div>
-            </div>
             <div class="row-fluid">
               <div class="col-xs-12">
                 <h5>Filters</h5>
               </div>
             </div>
             <div class="row-fluid">
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="margin-top: 1em">
               <template v-for="category in categories">
-                <label>
+                <label style="margin-left: 1em;">
                   <input :id="category['.key']" :value="category['.key']" type="checkbox" v-model="inputChecked">{{  category.name  }}
                 </label>
               </template>
             </div>
+            </div>
+            <hr>
+            <div class="row-fluid">
+              <div class="col-xs-12">
+                <h5>Create a New Category</h5>
+                <input v-model="newCat" class="form-control" placeholder="Enter category name">
+              </div>
+            </div>
+            <div class="row-fluid">
+              <div class="col-xs-12">
+                <label class="btn btn-primary" style="margin-top: 0.5em;">Set Category Color
+                  <input type="color" value="#ff0000" @change="setColor($event)" hidden>
+                </label>
+              </div>
+              <div class="col-xs-12">
+                <button type="button" class="btn btn-default btn-success" :disabled="!newCat" @click="createCategory">Submit</button>
+              </div>
             </div>
           </div>
         </div>
@@ -55,7 +66,7 @@ module.exports = {
     return {
       inputChecked: this.checkedcategories,
       newCat: '',
-      color: ''
+      color: '#000000'
     }
   },
   props: ['categories', 'checkedcategories', 'show'],
@@ -64,6 +75,8 @@ module.exports = {
       this.$emit('close')
     },
     createCategory(){
+      this.newCat = ''
+      this.color = '#000000'
       this.$emit('create-cat', {name: this.newCat, color: this.color})
     },
     editCategory(category){
@@ -92,16 +105,6 @@ module.exports = {
 </script>
 
 <style scoped>
-
-button{
-  margin-top: 1em;
-}
-
-/* 
-img{
-  max-width: 18.750em;
-  max-height: 18.750em;
-} */
 
 .modal {
   display: block;

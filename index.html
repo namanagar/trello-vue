@@ -27,7 +27,7 @@
               <img v-if="this.loggedInUser.name.length > 0" :src="loggedInUser.image" id="propic">
               <!-- <p v-if="this.loggedInUser.name.length > 0" style="color: white">Welcome, {{ loggedInUser.name }}</p> -->
             </h5>
-            <button v-if="this.loggedInUser.name.length == 0" class="btn btn-info my-2 my-lg-0 mr-3" type="button" @click="openSignIn">Log In</button>
+            <button v-if="this.loggedInUser.name.length == 0" class="btn btn-info my-2 my-lg-0 mr-3" type="button" @click="openSignIn">Sign In</button>
             <button v-if="this.loggedInUser.name.length == 0" class="btn btn-success my-2 my-lg-0 mr-3" type="button" @click="openRegister">Register</button>
             <button v-if="this.loggedInUser.name.length > 0" class="btn btn-danger my-2 my-lg-0 mr-3" type="button" @click="logout">Log Out</button>
             <label v-if="this.loggedInUser.name.length > 0" class="btn btn-primary my-2 my-lg-0 mr-3">Change Background Color
@@ -36,7 +36,7 @@
             <label v-if="this.loggedInUser.name.length > 0" class="btn btn-primary my-2 my-lg-0 mr-3">Set Background Image
                 <input type="file" @change="backgroundImageUpload($event)" class="custom-file-input" hidden>
               </label>
-            <button v-if="this.loggedInUser.name.length > 0" class="btn btn-secondary my-2 my-lg-0 mr-3" type="button" @click="openCategories">View Categories</button>
+            <button v-if="this.loggedInUser.name.length > 0" class="btn btn-secondary my-2 my-lg-0 mr-3" type="button" @click="openCategories">Filter Categories</button>
             <form v-if="this.loggedInUser.name.length > 0" class="form-inline my-2 my-lg-0">
               <input v-model="newList" class="form-control mr-sm-2" type="search" placeholder="Create a new list" aria-label="Create a List">
               <button class="btn btn-outline-success my-2 my-sm-0" type="button" @click="createNewList">Submit</button>
@@ -54,7 +54,7 @@
       <div class="row board">
         <!-- generates List components and handles its methods -->
         <template v-for="(list, index) in myLists">
-          <list :list="list" :index="index" :length="lengthLists" :tasks="allTasks" :users="users" :checkedcategories="checkedCategories"
+          <list :list="list" :index="index" :length="lengthLists" :tasks="allTasks" :users="users" :checkedcategories="checkedCategories" :allcategories="categories"
           @delete-list="deleteList(list)" @move-list-left="moveListLeft(list)" @move-list-right="moveListRight(list)"
           @create-task="createTask" @delete-task="deleteTask" @move-task-left="moveTaskLeft" @move-task-right="moveTaskRight"
           @edit-list-name="editListName"></list>
@@ -85,6 +85,14 @@
   html, div{
     max-width: 100%;
   }
+  #my-app {
+    min-height: 100vh;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-size: 100%;
+  }
   .row{
     max-width: 100%;
   }
@@ -92,7 +100,7 @@
     display: none !important;
   }
   .board {
-    margin-top: 5% !important;
+    margin-top: 3% !important;
   }
 
   #propic {

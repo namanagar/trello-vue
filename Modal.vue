@@ -12,41 +12,31 @@
           <div class="row">
             <div class="col-6">
               <h6>Description:
-                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="removeTodo(todo)"
+                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="editDescription"
                         title = "Edit">
                   <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
               </button>
               </h6>
-              <p @click="editDescription"> {{  task.description  }}</p>
-              <h6>Creation Date:
-                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="removeTodo(todo)"
-                        title = "Edit">
-                  <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
-                </button>
-              </h6>
+              <p> {{  task.description  }}</p>
+              <h6>Creation Date:</h6>
               <p>  {{  task.creationdate  }}</p>
               <h6>Deadline:
-                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="removeTodo(todo)"
+                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="editDeadline"
                         title = "Edit">
                   <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
                 </button>
               </h6>
-              <p @click="editDeadline"> {{  task.deadline  }}</p>
+              <p> {{  task.deadline  }}</p>
             </div>
             <div class="col-6">
-              <h6>Label:
-                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="removeTodo(todo)"
+              <h6>Category:
+                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="switchCategory"
                         title = "Edit">
                   <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
                 </button>
               </h6>
-              <p @click="switchCategory" :style="{ color: categoryColor() }"> {{ categoryName() }}</p>
-              <h6>List:
-                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="removeTodo(todo)"
-                        title = "Edit">
-                  <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
-                </button>
-              </h6>
+              <p :style="{ color: categoryColor() }"> {{ categoryName() }}</p>
+              <h6>List:</h6>
               <p>  {{  task.list  }}</p>
             </div>
           </div>

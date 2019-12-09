@@ -20,7 +20,7 @@
           @delete-task="deleteTask(task)" @move-task-left="moveTaskLeft(task)" @move-task-right="moveTaskRight(task)"></task>
         </template>
         <hr>
-        <button type="button" class="btn btn-default btn-light" @click="createTask" title = "Add Task">
+        <button type="button" class="btn btn-default btn-light" @click="showAddTask = true" title="Add Task">
           <i class="fa fa-plus" style="color: #0275d8" aria-hidden="true"></i>
         </button>
         <button v-if="index < length-1" class="btn btn-light right" @click="$emit('move-list-right')" title = "Move List Right">
@@ -29,13 +29,15 @@
           &laquo;</button>
       </div>
     </div>
+    <add-task :show="showAddTask" :categories="allcategories" @create-task="addTask" @close="showAddTask = false"></add-task>
   </div>
 </template>
 <script>
 module.exports = {
-  props: ['list', 'index', 'length', 'tasks', 'users', 'checkedcategories', 'checkeddates'],
+  props: ['list', 'index', 'length', 'tasks', 'users', 'checkedcategories', 'allcategories', 'checkeddates'],
   data: function() {
     return {
+      showAddTask : false
     }
   },
   methods: {
@@ -45,48 +47,23 @@ module.exports = {
         this.$emit("edit-list-name", [list, newName])
       }
     },
-    createTask(){
-      var name = prompt("What is the name of the new task?", "New Task")
-      var description = prompt("Describe the task " + name)
-      var category = prompt("What category is this task? A category MUST be added")
+    addTask(task){
+      const { name, description, category } = task
       // gets and formats the date strings to look nice
       var creationdate = new Date()
       if (creationdate.getMonth() < 10){
         creationdate = "0" + creationdate.toLocaleString().substring(0, 9)
       }
       else creationdate = creationdate.toLocaleString().substring(0, 10)
-        var deadline = new Date()
+      var deadline = new Date()
       deadline.setDate(deadline.getDate() + 7)
       var deadlinestring  = deadline.toLocaleString().substring(0, 10)
       if (deadline.getMonth() < 10){
         deadlinestring = "0" + deadline.toLocaleString().substring(0, 9)
       }
       var myList = this.list.name
-      //makes an array of all categories to check the existence of the category 
-      var categories = db.ref('categories')
-      var catArray = []
-      categories.on('value', function(snapshot){
-        snapshot.forEach(function(cat){
-          var cat = cat.val()
-          catArray.push(cat)
-        })
-      })
-      // checks if the category's name is valid. if it is, run the query, get the key, and push to firebase
-      var nameCheck = catArray.filter(cat => cat.name == category)
-      var categoryKey
-      if (nameCheck.length == 0 ||  category == null || category == undefined){
-        alert("Invalid category! Tasks must have categories")
-      }
-      else{
-        var query = db.ref('categories').orderByChild('name').equalTo(category)
-        query.once('value', function(snapshot){
-          snapshot.forEach(function(itemSnapshot) {
-           categoryKey = Object.keys(snapshot.val())[0]
-         })
-        })
-        if (name != null && name != ''){
-          this.$emit('create-task',
-          {
+      this.$emit('create-task',
+        {
             name: name,
             description: description,
             creationdate: creationdate,
@@ -96,10 +73,9 @@ module.exports = {
             todos: [],
             images: [],
             users: [],
-            category: categoryKey
-          })
-        }
-      }
+            category: category
+        })
+      this.showAddTask = false
     },
     deleteTask(task){
       this.$emit('delete-task', task)
@@ -126,7 +102,8 @@ module.exports = {
     }
   },
   components: {
-    'task': httpVueLoader('Task.vue')
+    'task': httpVueLoader('Task.vue'),
+    'add-task': httpVueLoader('AddTask.vue')
   }
 }
 </script>

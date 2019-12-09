@@ -22,7 +22,7 @@
                I would like to receive emails from Collab</label>
               <label class="form-row"><input type="checkbox" class = "check"> I have read and agree to the <u> Terms of Service</u></label>
               <br>
-              <button class="btn btn-primary" @click="createUser">Submit</button>
+              <button class="btn btn-success" @click="createUser">Submit</button>
             </div>
           </div>
         </div>

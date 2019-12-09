@@ -13,7 +13,7 @@
             <div class="col-xs-12">
               <input v-model="signin" class="form-control form-row" placeholder="Enter name or email">
               <input v-model="signinpass" class="form-control form-row" type="password" placeholder="Enter password">
-              <button class="btn btn-primary" @click="login">Submit</button>
+              <button class="btn btn-success" @click="login">Submit</button>
             </div>
           </div>
         </div>

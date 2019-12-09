@@ -18,23 +18,31 @@
       <button class="btn btn-light right" v-if="this.index < this.length-1" @click="$emit('move-task-right', task)">&raquo;</button>
       <button class="btn btn-light right" v-if="this.index > 0" @click="$emit('move-task-left', task)">&laquo;</button>
     </div>
-    <modal :task="task" :users="users" :show="showModal" @close="closeModal"></modal>
+    <modal :task="task" :users="users" :show="showModal" @close="closeModal" :categories="categories" ></modal>
+    <edit-name :show="showNameEditor" @close="showNameEditor = false" @edit-name="edit" :item="nameItem"></edit-name>
   </div>
 </template>
 <script>
 module.exports = {
-  props: ['task', 'index', 'length', 'users'],
+  props: ['task', 'index', 'length', 'users', 'categories'],
   data: function() {
     return {
-      showModal: false
+      showModal: false,
+      showNameEditor: false,
+      nameItem: {}
     }
   },
   methods: {
     editName(task){
-      var newName = prompt("What would you like to rename task " + task.name + "?", task.name)
-      if (newName != null && newName != ""){
-        this.$root.$firebaseRefs.allTasks.child(task['.key']).child('name').set(newName)
-      }
+      this.nameItem = task
+      this.showNameEditor = true
+    },
+    edit(stuff){
+      const { item, val } = stuff
+      this.$root.$firebaseRefs.allTasks.child(item['.key']).child('name').set(val)
+      this.showNameEditor = false
+      this.editInfo = ''
+      this.editValue = ''
     },
     openModal() {
       this.showModal = true
@@ -44,7 +52,8 @@ module.exports = {
     }
   },
   components: {
-    'modal': httpVueLoader('Modal.vue')
+    'modal': httpVueLoader('Modal.vue'),
+    'edit-name': httpVueLoader('EditName.vue')
   }
 }
 </script>

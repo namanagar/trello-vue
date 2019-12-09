@@ -36,10 +36,10 @@
             <label v-if="this.loggedInUser.name.length > 0" class="btn btn-primary my-2 my-lg-0 mr-3">Set Background Image
                 <input type="file" @change="backgroundImageUpload($event)" class="custom-file-input" hidden>
               </label>
-            <button v-if="this.loggedInUser.name.length > 0" class="btn btn-secondary my-2 my-lg-0 mr-3" type="button" @click="openCategories">Filter Categories</button>
+            <button v-if="this.loggedInUser.name.length > 0" class="btn btn-primary my-2 my-lg-0 mr-3" type="button" @click="openCategories">Filter Categories</button>
             <form v-if="this.loggedInUser.name.length > 0" class="form-inline my-2 my-lg-0">
               <input v-model="newList" class="form-control mr-sm-2" type="search" placeholder="Create a new list" aria-label="Create a List">
-              <button class="btn btn-outline-success my-2 my-sm-0 mr-3" type="button" @click="createNewList">Submit</button>
+              <button class="btn btn-success my-2 my-sm-0 mr-3" type="button" @click="createNewList">Submit</button>
             </form>
             <button v-if="this.loggedInUser.name.length > 0" class="btn btn-danger my-2 my-lg-0" type="button" @click="logout">Log Out</button>
           </div>
@@ -101,7 +101,7 @@
     display: none !important;
   }
   .board {
-    margin-top: 5% !important;
+    padding-top: 5% !important;
   }
 
   #propic {

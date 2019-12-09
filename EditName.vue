@@ -3,7 +3,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h3>Sign In</h3>
+          <h5>Enter a new name for "{{ this.item.name }}"</h5>
           <button type="button" class="close" @click="closeModal">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -11,8 +11,8 @@
         <div class="modal-body">
           <div class="row-fluid">
             <div class="col-xs-12">
-              <input v-model="name" class="form-control form-row" placeholder="Enter new name">
-              <button class="btn btn-primary" @click="login">Submit</button>
+              <input v-model="name" class="form-control form-row" placeholder="Name goes here">
+              <button class="btn btn-success" @click="edit" :disabled="!name">Submit</button>
             </div>
           </div>
         </div>
@@ -25,39 +25,18 @@
 module.exports = {
   data: function() {
     return {
-      signin: '',
-      signinpass: ''
+      name: ''
     }
   },
-  props: ['users', 'show'],
+  props: ['item','show'],
   methods: {
     closeModal(){
       this.$emit('close')
     },
-    login(){
-      //checks to see if the signin is valid, then logs the user in if it is
-      var nameCheck = this.users.filter(user => user.name == this.signin)
-      var emailCheck = this.users.filter(user => user.email == this.signin)
-      if (nameCheck.length > 0){
-        if (nameCheck[0].password === this.signinpass){
-          this.$emit('login', nameCheck[0])
-        }
-        this.signin = ''
-        this.signinpass = ''
-      }
-      else if (emailCheck.length > 0){
-        if (emailCheck[0].password === this.signinpass){
-          this.$emit('login', emailCheck[0])
-        }
-        this.signin = ''
-        this.signinpass = ''
-      }
-      else{
-        alert("Sorry, your credentials don't match!")
-        this.signin = ''
-        this.signinpass = ''
-      }
-    },
+    edit(){
+      this.$emit('edit-name', {item: this.item, val: this.name})
+      this.name = ''
+    }
   }
 }
 </script>

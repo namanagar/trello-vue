@@ -9,14 +9,14 @@
           <button type="button" class="btn btn-light right" @click="$emit('delete-list')" title = "Delete List">
             <i class="fa fa-trash"></i>
           </button>
-          <button type="button" class="btn btn-light right" @click="editName(list)" title = "Edit List Name">
+          <button type="button" class="btn btn-light right" @click="editName" title = "Edit List Name">
             <i class="fa fa-edit" aria-hidden="true"></i>
           </button>
         </h5>
       </div>
       <div class="card-block collapse show" :id="this.index">
         <template v-for="task in tasks">
-          <task v-show="render(task)" :users="users" :task="task" :index="index" :length="length" :key="task.key" :list="list"
+          <task v-show="render(task)" :users="users" :task="task" :index="index" :length="length" :key="task.key" :list="list" :categories="allcategories"
           @delete-task="deleteTask(task)" @move-task-left="moveTaskLeft(task)" @move-task-right="moveTaskRight(task)"></task>
         </template>
         <hr>
@@ -30,6 +30,7 @@
       </div>
     </div>
     <add-task :show="showAddTask" :categories="allcategories" @create-task="addTask" @close="showAddTask = false"></add-task>
+    <edit-name :show="showNameEditor" @close="showNameEditor = false" @edit-name="edit" :item="nameItem"></edit-name>
   </div>
 </template>
 <script>
@@ -37,15 +38,23 @@ module.exports = {
   props: ['list', 'index', 'length', 'tasks', 'users', 'checkedcategories', 'allcategories', 'checkeddates'],
   data: function() {
     return {
-      showAddTask : false
+      showAddTask : false,
+      showModal: false,
+      showNameEditor: false,
+      nameItem: {}
     }
   },
   methods: {
-    editName(list){
-      var newName = prompt("What would you like to rename list " + list.name + "? Beware that the list should be empty or your cards will disappear!", list.name)
-      if (newName != null && newName != ""){
-        this.$emit("edit-list-name", [list, newName])
-      }
+    editName(){
+      this.nameItem = this.list
+      this.showNameEditor = true
+    },
+    edit(stuff){
+      const { item, val } = stuff
+      this.$emit("edit-list-name", [this.list, val])
+      this.showNameEditor = false
+      this.editInfo = ''
+      this.editValue = ''
     },
     addTask(task){
       const { name, description, category } = task
@@ -98,7 +107,8 @@ module.exports = {
   },
   components: {
     'task': httpVueLoader('Task.vue'),
-    'add-task': httpVueLoader('AddTask.vue')
+    'add-task': httpVueLoader('AddTask.vue'),
+    'edit-name': httpVueLoader('EditName.vue')
   }
 }
 </script>

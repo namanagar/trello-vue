@@ -40,6 +40,8 @@
               <p>  {{  task.list.name  }}</p>
             </div>
           </div>
+          <edit-details :show="showDetailEditor" @close="showDetailEditor = false" @edit-details="edit"
+                        :info="editInfo" :value="editValue" :data="editData"></edit-details>
           <hr>
           <div class="row-fluid">
             <div class="col-xs-3">
@@ -110,9 +112,16 @@
 
 <script>
 module.exports = {
-  props: ['task', 'show', 'users'],
+  props: ['task', 'show', 'users', 'categories'],
+  components: {
+    'edit-details': httpVueLoader('EditDetails.vue')
+  },
   data: function(){
     return {
+      editInfo: '',
+      editValue: '',
+      editData: [],
+      showDetailEditor : false
     }
   },
   methods: {
@@ -135,44 +144,28 @@ module.exports = {
       return categoryColor
     },
     switchCategory(){
-      var category = prompt("What category is this task? Press enter without hitting anything to leave it as is", this.task.category.name)
-      var categories = db.ref('categories')
-      var catArray = []
-      //makes an array of all categories to check the existence of the category 
-      categories.on('value', function(snapshot){
-        snapshot.forEach(function(cat){
-          var cat = cat.val()
-          catArray.push(cat)
-        })
-      })
-      // checks if the category's name is valid
-      var nameCheck = catArray.filter(cat => cat.name == category)
-      if (nameCheck.length == 0){
-        alert("Invalid category!")
-        category = ""
-      }
-      var query = db.ref('categories').orderByChild('name').equalTo(category)
-      var categoryKey
-      query.once('value', function(snapshot){
-        snapshot.forEach(function(itemSnapshot) {
-         categoryKey = Object.keys(snapshot.val())[0]
-       })
-      })
-      // set the new category in firebase
-      tasksRef.child(this.task['.key']).child('category').set(categoryKey)
+      this.editData = this.categories
+      this.editInfo = 'category'
+      this.editValue = this.task.category
+      this.showDetailEditor = true
+    },
+    edit(stuff){
+      const { info, val } = stuff
+      tasksRef.child(this.task['.key']).child(info).set(val)
+      this.showDetailEditor = false
+      this.editInfo = ''
+      this.editValue = ''
+      this.editData = []
     },
     editDescription(){
-      var newDesc = prompt("What is the new description for the task?", this.task.description)
-      if (newDesc.length > 0 && newDesc != null){
-        tasksRef.child(this.task['.key']).child('description').set(newDesc)
-      }
+      this.editInfo = 'description'
+      this.editValue = this.task.description
+      this.showDetailEditor = true
     },
     editDeadline(){
-      var newDeadline = prompt("What is the new deadline? Please format as MM/DD/YYYY", this.task.deadline)
-      //checks the mm/dd/yyyy format and updates firebase
-      if (newDeadline.length == 10 && newDeadline != null && newDeadline.includes("/")){
-        tasksRef.child(this.task['.key']).child('deadline').set(newDeadline)
-      }
+      this.editInfo = 'deadline'
+      this.editValue = this.task.deadline
+      this.showDetailEditor = true
     },
     closeModal(){
       this.$emit('close')

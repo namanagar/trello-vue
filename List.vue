@@ -7,7 +7,7 @@
             {{ list.name }}
           </a>
           <button type="button" class="btn btn-light right" @click="$emit('delete-list')" title = "Delete List">
-            <i class="fa fa-minus-circle"></i>
+            <i class="fa fa-trash"></i>
           </button>
           <button type="button" class="btn btn-light right" @click="editName(list)" title = "Edit List Name">
             <i class="fa fa-edit" aria-hidden="true"></i>

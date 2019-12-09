@@ -3,7 +3,7 @@
     <div class="card-header">
       <h5 class="card-title">{{ task.name }}
         <button type="button" class="btn btn-light right" @click="$emit('delete-task')" title="Delete Task">
-          <i class="fa fa-archive"></i>
+          <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
         <button type="button" class="btn btn-light right" @click="editName(task)" title="Edit Task Name">
           <i class="fa fa-edit" aria-hidden="true"></i>

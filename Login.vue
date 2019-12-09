@@ -11,8 +11,8 @@
         <div class="modal-body">
           <div class="row-fluid">
             <div class="col-xs-12">
-              <input v-model="signin" class="form-control" placeholder="Enter name or email">
-              <input v-model="signinpass" class="form-control" type="password" placeholder="Enter password">
+              <input v-model="signin" class="form-control form-row" placeholder="Enter name or email">
+              <input v-model="signinpass" class="form-control form-row" type="password" placeholder="Enter password">
               <button class="btn btn-primary" @click="login">Submit</button>
             </div>
           </div>
@@ -65,9 +65,9 @@ module.exports = {
 
 <style scoped>
 
-button{
-  margin-top: 1em;
-}
+  button{
+    margin-top: 1em;
+  }
 
 /* 
 img{
@@ -75,8 +75,11 @@ img{
   max-height: 18.750em;
 } */
 
-.modal {
-  display: block;
-}
+  .modal {
+    display: block;
+  }
+  .form-row {
+    margin-bottom: 1em;
+  }
 
 </style>

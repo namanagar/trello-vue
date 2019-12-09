@@ -8,7 +8,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body" v-if="!data">
+        <div class="modal-body" v-if="!data.length">
           <div class="row-fluid">
             <div class="col-xs-12">
               <h5>Currently, the {{ this.info }} is "{{ this.value }}".</h5>

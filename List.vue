@@ -6,10 +6,10 @@
           <a data-toggle="collapse" :href="'#' + this.index">
             {{ list.name }}
           </a>
-          <button type="button" class="btn btn-light right" @click="$emit('delete-list')">
+          <button type="button" class="btn btn-light right" @click="$emit('delete-list')" title = "Delete List">
             <i class="fa fa-minus-circle"></i>
           </button>
-          <button type="button" class="btn btn-light right" @click="editName(list)">
+          <button type="button" class="btn btn-light right" @click="editName(list)" title = "Edit List Name">
             <i class="fa fa-edit" aria-hidden="true"></i>
           </button>
         </h5>
@@ -20,9 +20,13 @@
           @delete-task="deleteTask(task)" @move-task-left="moveTaskLeft(task)" @move-task-right="moveTaskRight(task)"></task>
         </template>
         <hr>
-        <button type="button" class="btn btn-default btn-light" @click="createTask"><i class="fa fa-plus" style="color: #0275d8" aria-hidden="true"></i></button>
-        <button v-if="index < length-1" class="btn btn-light right" @click="$emit('move-list-right')">&raquo;</button>
-        <button v-if="index > 0" class="btn btn-light right" @click="$emit('move-list-left')">&laquo;</button>
+        <button type="button" class="btn btn-default btn-light" @click="createTask" title = "Add Task">
+          <i class="fa fa-plus" style="color: #0275d8" aria-hidden="true"></i>
+        </button>
+        <button v-if="index < length-1" class="btn btn-light right" @click="$emit('move-list-right')" title = "Move List Right">
+          &raquo;</button>
+        <button v-if="index > 0" class="btn btn-light right" @click="$emit('move-list-left')" title = "Move List Left">
+          &laquo;</button>
       </div>
     </div>
   </div>

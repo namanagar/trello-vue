@@ -17,81 +17,41 @@
   <title>Collab</title>
 </head>
 <body>
-  <!-- root element --> 
+  <!-- root element that connects to Vue --> 
   <div id="my-app">
       <!-- nav bar -->
       <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
           <a class="navbar-brand" href="#"><i class="fa fa-adjust" aria-hidden="true">></i>  collab</a>
           <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-              </li>
-            </ul>
+            <h5 class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <img v-if="this.loggedInUser.name.length > 0" :src="loggedInUser.image" id="propic">
+              <!-- <p v-if="this.loggedInUser.name.length > 0" style="color: white">Welcome, {{ loggedInUser.name }}</p> -->
+            </h5>
+            <button v-if="this.loggedInUser.name.length == 0" class="btn btn-info my-2 my-lg-0 mr-3" type="button" @click="openSignIn">Log In</button>
+            <button v-if="this.loggedInUser.name.length == 0" class="btn btn-success my-2 my-lg-0 mr-3" type="button" @click="openRegister">Register</button>
+            <button v-if="this.loggedInUser.name.length > 0" class="btn btn-danger my-2 my-lg-0 mr-3" type="button" @click="logout">Log Out</button>
+            <label class="btn btn-primary my-2 my-lg-0 mr-3">Change Background Color
+                <input type="color" value="#ff0000" @change="setColor($event)" hidden>
+            </label>
+            <label class="btn btn-primary my-2 my-lg-0 mr-3">Set Background Image
+                <input type="file" @change="backgroundImageUpload($event)" class="custom-file-input" hidden>
+              </label>
+            <button class="btn btn-secondary my-2 my-lg-0 mr-3" type="button" @click="openCategories">View Categories</button>
             <form class="form-inline my-2 my-lg-0">
               <input v-model="newList" class="form-control mr-sm-2" type="search" placeholder="Create a new list" aria-label="Create a List">
               <button class="btn btn-outline-success my-2 my-sm-0" type="button" @click="createNewList">Submit</button>
             </form>
           </div>
+          <!-- nav bar modals for login, register, categories handled by the above functions  -->
+          <login :users="users" :show="showSignIn" @close="closeSignIn" @login="login"></login>
+          <register :show="showRegister" @close="closeRegister" @create-user="createUser"></register>
+          <categories :show="showCategories" @close="closeCategories" :categories="categories" 
+           :checkedcategories="checkedCategories" @input="checkedCategories = $event" 
+           @create-cat="createCategory" @edit-cat="editCategory"></categories>
         </nav>
-    <!-- div that controls the background color/image using the style bindings -->
+    <!-- div that controls the background color/image using the style bindings from the header buttons -->
     <div class="backgroundwrapper" :style="{ backgroundColor: backgroundColorVal, backgroundImage: 'url(' + backgroundImageVal + ')' }">
-      <div class="row">
-        <!-- Vue component that handles creating users, logging in and out, and editing user info  @edit-username="editUsername" @edit-email="editEmail" @edit-pic="editPic" -->
-        <user @create-user="createUser" @login="login" @logout="logout" :users="users" :loggedin="loggedInUser"></user>
-      </div>
-      <div class="row">
-        <!-- Vue component that handles adding lists  
-        <add-list @create-list="createList" :lengthlists="lengthLists"></add-list> -->
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="row-fluid">
-            <div class="col-lg-4">
-              <h3>Project Details</h3>
-            </div>
-          </div>
-          <div class="row-fluid">
-            <!-- Two buttons to set the background color and background image of the project -->
-            <div class="col-lg-4">
-              <h5>Background color: </h5>
-              <label class="btn btn-primary">Set Color
-                <input type="color" value="#ff0000" @change="setColor($event)">
-              </label>
-              <h5>Background image: </h5>
-              <label class="btn btn-primary">Set Image
-                <input type="file" @change="backgroundImageUpload($event)" class="custom-file-input">
-              </label>
-            </div>
-            <div class="col-lg-4">
-              <h5>Labels: </h5>
-              <ul>
-                <li v-for="category in categories" @click="editCategory(category)" :style="{ color: category.color }">
-                  {{  category.name  }}
-                </li>
-              </ul>
-              <small class="text-muted">Click on a label to edit it.</small>
-              <button type="button" class="btn btn-default btn-primary" @click="createCategory">Create a Category</button>
-            </div>
-            <div class="col-lg-4">
-              <h5>Filters</h5>
-              <template v-for="category in categories">
-                <label>
-                  <input :id="category['.key']" :value="category['.key']" type="checkbox" v-model="checkedCategories">{{  category.name  }}</input>
-                </label>
-              </template>
-            </div>
-          </div>
-        </div>
-        <hr>
-      </div>
-      <div class="row">
+      <div class="row board">
         <!-- generates List components and handles its methods -->
         <template v-for="(list, index) in myLists">
           <list :list="list" :index="index" :length="lengthLists" :tasks="allTasks" :users="users" :checkedcategories="checkedCategories"
@@ -111,9 +71,15 @@
   .row{
     max-width: 100%;
   }
-
   [hidden] {
     display: none !important;
+  }
+  .board {
+    margin-top: 5% !important;
+  }
+  #propic {
+    max-width: 2.5em !important;
+    border-radius: 50%;
   }
 </style>
 <script src="app.js"></script>

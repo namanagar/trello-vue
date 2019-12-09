@@ -38,6 +38,9 @@ new Vue({
     backgroundImageVal: '',
     checkedCategories: checkedCategories,
     newList: '',
+    showSignIn: false,
+    showRegister: false,
+    showCategories: false,
   },
   firebase: {
     myLists: listsRef.orderByChild('index'),
@@ -52,7 +55,9 @@ new Vue({
   components: {
     'add-list': httpVueLoader('AddList.vue'),
     'list': httpVueLoader('List.vue'),
-    'user': httpVueLoader('User.vue')
+    'login': httpVueLoader('Login.vue'),
+    'register': httpVueLoader('Register.vue'),
+    'categories': httpVueLoader('Categories.vue')
   },
   computed: {
     lengthLists: function(){
@@ -72,26 +77,37 @@ new Vue({
     },
     createUser(user){
       this.$firebaseRefs.users.push(user)
+      this.showRegister = false
+    },
+    openSignIn() {
+      this.showSignIn = true
+    },
+    closeSignIn() {
+      this.showSignIn = false
+    },
+    openRegister() {
+      this.showRegister = true
+    },
+    closeRegister() {
+      this.showRegister = false
+    },
+    openCategories() {
+      this.showCategories = true
+    },
+    closeCategories() {
+      this.showCategories = false
     },
     login(user){
       this.$firebaseRefs.loggedInUser.child('name').set(user.name)
       this.$firebaseRefs.loggedInUser.child('email').set(user.email)
       this.$firebaseRefs.loggedInUser.child('image').set(user.image)
+      this.showSignIn = false
     },
     logout(){
       this.$firebaseRefs.loggedInUser.child('name').set('')
       this.$firebaseRefs.loggedInUser.child('email').set('')
       this.$firebaseRefs.loggedInUser.child('image').set('')
     },
-    /* editUsername(newName){
-      this.$firebaseRefs.loggedInUser.child('name').set(newName)
-    },
-    editEmail(newEmail){
-      this.$firebaseRefs.loggedInUser.child('email').set(newEmail)
-    },
-    editPic(newPic){
-      this.$firebaseRefs.loggedInUser.child('image').set(newPic)
-    }, */
     deleteList(list){
       this.$firebaseRefs.myLists.child(list['.key']).remove()
     },
@@ -100,30 +116,13 @@ new Vue({
       var newName = array[1]
       this.$firebaseRefs.myLists.child(list['.key']).child('name').set(newName)
     },
-    createCategory(){
-      var name = prompt("What do you want to name the new category?")
-      var color = prompt("Please enter a hex value for the color of the category, including the #")
-      if (name != null && name.length != 0){
-        if (color.charAt(0) === '#' && color.length === 7){
-          this.$firebaseRefs.categories.push({name: name, color: color})
-        }
-        else alert("Your color is formatted wrong!")
-      }
-      else alert("Must enter a name!")
+    createCategory(category){
+      this.$firebaseRefs.categories.push(category)
     },
-    editCategory(category){
-      var newName = prompt("What is the new name for this category?", category.name)
-      //failsafe to stop users from making blank category names
-      if (newName.length == 0 || newName == null){
-        newName = category.name
-      }
-      var newColor = prompt("What is the new color for this category? Please enter it as a hex value with a #", category.color)
-      //makes sure color is valid hex, then updates firebase
-      if (newColor.charAt(0) === '#' && newColor.length === 7){
-        this.$firebaseRefs.categories.child(category['.key']).child('name').set(newName)
-        this.$firebaseRefs.categories.child(category['.key']).child('color').set(newColor)
-      }
-      else alert("Your color is formatted wrong!")
+    editCategory(stuff){
+      const { category, name, color } = stuff
+      this.$firebaseRefs.categories.child(category['.key']).child('name').set(name)
+      this.$firebaseRefs.categories.child(category['.key']).child('color').set(color)
     },
     moveListLeft(list){
       var origIndex = this.myLists.indexOf(list)

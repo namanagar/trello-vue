@@ -9,51 +9,99 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="row-fluid">
-            <div class="col-xs-12">
-              <p @click="editDescription">Description: {{  task.description  }}</p>
-              <p>Creation Date:  {{  task.creationdate  }}</p>
-              <p @click="editDeadline">Deadline:  {{  task.deadline  }}</p>
-              <p @click="switchCategory" :style="{ color: categoryColor() }">Label: {{ categoryName() }}</p>
-              <p>List:  {{  task.list  }}</p>
-              <small class="text-muted">Click on an item to edit it.</small>
+          <div class="row">
+            <div class="col-6">
+              <h6>Description:
+                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="removeTodo(todo)"
+                        title = "Edit">
+                  <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
+              </button>
+              </h6>
+              <p @click="editDescription"> {{  task.description  }}</p>
+              <h6>Creation Date:
+                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="removeTodo(todo)"
+                        title = "Edit">
+                  <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
+                </button>
+              </h6>
+              <p>  {{  task.creationdate  }}</p>
+              <h6>Deadline:
+                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="removeTodo(todo)"
+                        title = "Edit">
+                  <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
+                </button>
+              </h6>
+              <p @click="editDeadline"> {{  task.deadline  }}</p>
             </div>
-            <hr>
+            <div class="col-6">
+              <h6>Label:
+                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="removeTodo(todo)"
+                        title = "Edit">
+                  <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
+                </button>
+              </h6>
+              <p @click="switchCategory" :style="{ color: categoryColor() }"> {{ categoryName() }}</p>
+              <h6>List:
+                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="removeTodo(todo)"
+                        title = "Edit">
+                  <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
+                </button>
+              </h6>
+              <p>  {{  task.list  }}</p>
+            </div>
           </div>
+          <hr>
           <div class="row-fluid">
             <div class="col-xs-3">
-              <p>Images: </p>
+              <h6>Images: </h6>
               <ul>
-                <li v-for="image in task.images" @click="removeImage(image)">
+                <li v-for="image in task.images" >
                   <img :src="image"/>
+                  <button type="button" class="btn-xs btn-default btn-light delete-buttons"
+                          @click="removeImage(image)" title = "Delete">
+                    <i class="fa fa-trash" style="color: #0275d8" aria-hidden="true" ></i>
+                  </button>
                 </li>
-              </div>
-            </ul>
+              </ul>
+            </div>
             <div class="col-xs-3">
-              <p>Comments: </p>
+              <h6>Comments: </h6>
               <ul>
                 <li v-for="comment in task.comments" @click="removeComment(comment)">
                   {{  comment  }}
+                  <button type="button" class="btn-xs btn-default btn-light delete-buttons"
+                          @click="removeComment(comment)" title = "Delete">
+                    <i class="fa fa-trash" style="color: #0275d8" aria-hidden="true" ></i>
+                  </button>
                 </li>
               </ul>
             </div>
             <div class="col-xs-3">
-              <p>Hashtags: </p>
+              <h6>Hashtags: </h6>
               <ul>
                 <li v-for="todo in task.todos" @click="removeTodo(todo)">
                   {{ '#' + todo  }}
+                  <button type="button" class="btn-xs btn-default btn-light delete-buttons"
+                          @click="removeTodo(todo)" title = "Delete">
+                    <i class="fa fa-trash" style="color: #0275d8" aria-hidden="true" ></i>
+                  </button>
                 </li>
               </ul>
             </div>
             <div class="col-xs-3">
-              <p>Users: </p>
+              <h6>Shared With: </h6>
               <ul>
-                <li v-for="user in task.users" @click="removeUser(user)">
-                  {{  user.name  }}
-                </li>
+                <span  v-for="user in task.users" >
+                  <span>
+                    <img :src="user.image" class = "profile-pic" v-bind:title="user.name"/>
+                    <button type="button" class="btn-xs btn-default btn-light delete-buttons"
+                            @click="removeUser(user)" title = "Delete">
+                      <i class="fa fa-trash" style="color: #0275d8" aria-hidden="true" ></i>
+                    </button>
+                  </span>
+                </span>
               </ul>
             </div>
-            <small class="text-muted">Click on an item to remove it.</small>
           </div>
         </div>
         <div class="modal-footer">
@@ -227,5 +275,36 @@ module.exports = {
 img{
   max-width: 9.375em;
   max-height: 9.375em;
+
+
 }
+
+h6 {
+  display: inline;
+}
+
+.edit-buttons{
+  float:right;
+}
+
+.delete-buttons {
+  margin-right: 1em;
+}
+
+.profile-pic {
+  display: inline;
+  object-fit: cover;
+  overflow: hidden;
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 50%;
+  border-spacing: 2.5em;
+
+
+}
+
+
+
+
+
 </style>

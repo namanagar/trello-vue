@@ -20,13 +20,6 @@
               <p> {{  task.description  }}</p>
               <h6>Creation Date:</h6>
               <p>  {{  task.creationdate  }}</p>
-              <h6>Deadline:
-                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="editDeadline"
-                        title = "Edit">
-                  <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
-                </button>
-              </h6>
-              <p> {{  task.deadline  }}</p>
             </div>
             <div class="col-6">
               <h6>Category:
@@ -36,6 +29,13 @@
                 </button>
               </h6>
               <p :style="{ color: categoryColor() }"> {{ categoryName() }}</p>
+                <h6>Deadline:
+                <button type="button" class="btn-xs btn-default btn-light edit-buttons" @click="editDeadline"
+                        title = "Edit">
+                  <i class="fa fa-edit" style="color: #0275d8" aria-hidden="true" ></i>
+                </button>
+              </h6>
+              <p> {{  task.deadline  }}</p>
             </div>
           </div>
           <edit-details :show="showDetailEditor" @close="showDetailEditor = false" @edit-details="edit"

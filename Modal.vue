@@ -36,8 +36,6 @@
                 </button>
               </h6>
               <p :style="{ color: categoryColor() }"> {{ categoryName() }}</p>
-              <h6>List:</h6>
-              <p>  {{  task.list.name  }}</p>
             </div>
           </div>
           <edit-details :show="showDetailEditor" @close="showDetailEditor = false" @edit-details="edit"
